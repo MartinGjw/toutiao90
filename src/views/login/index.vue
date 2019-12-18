@@ -2,29 +2,61 @@
   <div class='login'>
 <el-card class="box-card">
     <div class='title'> <img src="../../assets/img/logo_index.png" alt=""></div>
-<el-form>
-    <el-form-item>
-    <el-input v-model="input" placeholder="请输入内容"></el-input>
-    </el-form-item>
-    <el-form-item>
-    <el-input class='code' v-model="input" placeholder="验证码"></el-input>
-     <el-button plain class='btn'>发送验证码</el-button>
-    </el-form-item>
-    <el-form-item>
-     <el-checkbox v-model="checked">我已阅读并同意用户协议和隐私条款</el-checkbox>
-    </el-form-item>
-    <el-form-item>
-          <el-button type="primary" class="minbtn">主要按钮</el-button>
-    </el-form-item>
-</el-form>
+    <el-form :model="form" :rules="rules" ref="ruieform">
+      <el-form-item prop='mobil'>
+        <el-input v-model="form.mobil" placeholder="请输入内容"></el-input>
+      </el-form-item>
+      <el-form-item prop="code">
+        <el-input class='code' v-model="form.code" placeholder="验证码"></el-input>
+        <el-button plain class='btn'>发送验证码</el-button>
+      </el-form-item>
+      <el-form-item prop="check">
+         <el-checkbox v-model="form.check">我已阅读并同意用户协议和隐私条款</el-checkbox>
+      </el-form-item>
+      <el-form-item>
+          <el-button type="primary" class="minbtn" @click="clicksubmit">提交</el-button>
+      </el-form-item>
+    </el-form>
 
 </el-card>
   </div>
 </template>
 
 <script>
+// import { log } from 'util'
 export default {
-
+  data () {
+    return {
+      form: {
+        mobil: '',
+        code: '',
+        check: false
+      },
+      // 校验规则
+      rules: {
+        mobil: [{ required: true, message: '请输入您的手机号' },
+          { pattern: /^1[3456789]\d{9}$/, message: '请输入合法的手机号' }],
+        code: [{ required: true, message: '请输入您的验证码' },
+          { pattern: /^\d{6}$/, message: '验证码为6位数字' }],
+        check: [{ validator: function (rule, value, callback) {
+          if (value) {
+            callback()
+          } else {
+            callback(new Error('您应该无条件同意我们的条款'))
+          }
+        } }]
+      }
+    }
+  },
+  methods: {
+    clicksubmit () {
+      this.$refs.ruieform.validate(function (isok) {
+        if (isok) {
+          console.log('验证成功')
+        }
+      })
+    }
+  }
 }
 </script>
 
