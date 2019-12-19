@@ -1,6 +1,8 @@
 <template>
   <div class='login'>
+
 <el-card class="box-card">
+
     <div class='title'> <img src="../../assets/img/logo_index.png" alt=""></div>
     <el-form :model="form" :rules="rules" ref="ruieform">
       <el-form-item prop='mobil'>
@@ -19,6 +21,7 @@
     </el-form>
 
 </el-card>
+
   </div>
 </template>
 
@@ -62,9 +65,9 @@ export default {
 
 <style lang="less" scoped>
 .login{
-    background-image:url('../../assets/img/background.jpg');
+    background-image:url('../../assets/img/1 (1).jpeg');
     height: 100vh;
-    background-size: cover;
+    // background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
