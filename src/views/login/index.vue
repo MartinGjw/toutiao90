@@ -5,8 +5,8 @@
 
     <div class='title'> <img src="../../assets/img/logo_index.png" alt=""></div>
     <el-form :model="form" :rules="rules" ref="ruieform">
-      <el-form-item prop='mobil'>
-        <el-input v-model="form.mobil" placeholder="请输入内容"></el-input>
+      <el-form-item prop='mobile'>
+        <el-input v-model="form.mobile" placeholder="请输入内容"></el-input>
       </el-form-item>
       <el-form-item prop="code">
         <el-input class='code' v-model="form.code" placeholder="验证码"></el-input>
@@ -31,13 +31,13 @@ export default {
   data () {
     return {
       form: {
-        mobil: '',
+        mobile: '',
         code: '',
         check: false
       },
       // 校验规则
       rules: {
-        mobil: [{ required: true, message: '请输入您的手机号' },
+        mobile: [{ required: true, message: '请输入您的手机号' },
           { pattern: /^1[3456789]\d{9}$/, message: '请输入合法的手机号' }],
         code: [{ required: true, message: '请输入您的验证码' },
           { pattern: /^\d{6}$/, message: '验证码为6位数字' }],
@@ -53,9 +53,21 @@ export default {
   },
   methods: {
     clicksubmit () {
-      this.$refs.ruieform.validate(function (isok) {
+      this.$refs.ruieform.validate((isok) => {
         if (isok) {
-          console.log('验证成功')
+          this.$axios({
+            url: '/authorizations',
+            method: 'post',
+            data: this.form
+          }).then(res => {
+            window.localStorage.setItem = ('user-token', res.data.data.token)
+            this.$router.push('/Home')
+          }).catch(() => {
+            this.$message({
+              message: '账号密码错误',
+              type: 'warning'
+            })
+          })
         }
       })
     }
