@@ -7,9 +7,10 @@
           </el-col>
           <el-col :span='12' class="right">
               <el-row type="flex" justify='end' align='middle'>
-                  <img src="../../assets/img/1 (2).jpg" alt="">
+                  <img :src="userinfor.photo?userinfor.photo:'../assets/img/1 (1).jpeg'" alt="">
                   <el-dropdown>
-                  <span class="el-dropdown-link">下拉菜单</span>
+                  <span class="el-dropdown-link">{{userinfor.name}}</span>
+
                  <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item>个人信息</el-dropdown-item>
                   <el-dropdown-item>git地址</el-dropdown-item>
@@ -24,7 +25,22 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      userinfor: {}
+    }
+  },
+  created () {
+    let token = localStorage.getItem('user-token')
+    this.$axios({
+      url: '/user/profile',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => {
+      this.userinfor = res.data.data
+    })
+  }
 }
 </script>
 

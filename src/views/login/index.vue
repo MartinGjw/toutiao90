@@ -60,7 +60,7 @@ export default {
             method: 'post',
             data: this.form
           }).then(res => {
-            window.localStorage.setItem = ('user-token', res.data.data.token)
+            window.localStorage.setItem('user-token', res.data.data.token)
             this.$router.push('/Home')
           }).catch(() => {
             this.$message({

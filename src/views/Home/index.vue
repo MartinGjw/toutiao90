@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import layoutaside from '../../components/home/layout-aside'
-import layouttop from '../../components/home/layout-top'
+// import layoutaside from '../../components/home/layout-aside'
+// import layouttop from '../../components/home/layout-top'
 export default {
-  components: {
-    'layout-aside': layoutaside,
-    'layout-top': layouttop
-  }
+  // components: {
+  //   'layout-aside': layoutaside,
+  //   'layout-top': layouttop
+  // }
 }
 </script>
 

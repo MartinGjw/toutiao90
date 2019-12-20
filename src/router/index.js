@@ -2,8 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import login from '../views/login'
+import layout from '../components'
 
 Vue.use(VueRouter)
+Vue.use(layout)
 
 const routes = [
   { path: '/',
