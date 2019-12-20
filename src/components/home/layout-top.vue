@@ -7,14 +7,14 @@
           </el-col>
           <el-col :span='12' class="right">
               <el-row type="flex" justify='end' align='middle'>
-                  <img :src="userinfor.photo?userinfor.photo:'../assets/img/1 (1).jpeg'" alt="">
-                  <el-dropdown>
+                  <img :src="userinfor.photo?userinfor.photo:defaultimg" alt="">
+                  <el-dropdown @command='pushclick'>
                   <span class="el-dropdown-link">{{userinfor.name}}</span>
 
                  <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>个人信息</el-dropdown-item>
-                  <el-dropdown-item>git地址</el-dropdown-item>
-                  <el-dropdown-item>退出</el-dropdown-item>
+                  <el-dropdown-item command='info'>个人信息</el-dropdown-item>
+                  <el-dropdown-item command='gittitle'>git地址</el-dropdown-item>
+                  <el-dropdown-item command='getout'>退出</el-dropdown-item>
                  </el-dropdown-menu>
                    </el-dropdown>
               </el-row>
@@ -27,7 +27,20 @@
 export default {
   data () {
     return {
-      userinfor: {}
+      userinfor: {},
+      defaultimg: require('../../assets/img/1 (1).jpeg')
+    }
+  },
+  methods: {
+    pushclick (command) {
+      if (command === 'info') {
+
+      } else if (command === 'gittitle') {
+        window.location.href = 'https://github.com/MartinGjw'
+      } else {
+        window.localStorage.removeItem('user-token')
+        this.$router.push('/login')
+      }
     }
   },
   created () {
