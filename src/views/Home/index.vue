@@ -9,7 +9,8 @@
      <layout-top></layout-top>
       </el-header>
       <el-main>
-        右侧内容
+        <!-- 右侧内容 -->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>

@@ -61,7 +61,7 @@ export default {
             data: this.form
           }).then(res => {
             window.localStorage.setItem('user-token', res.data.data.token)
-            this.$router.push('/Home')
+            this.$router.push('/home')
           }).catch(() => {
             this.$message({
               message: '账号密码错误',
