@@ -60,14 +60,15 @@ export default {
             method: 'post',
             data: this.form
           }).then(res => {
-            window.localStorage.setItem('user-token', res.data.data.token)
+            window.localStorage.setItem('user-token', res.data.token)
             this.$router.push('/home')
-          }).catch(() => {
-            this.$message({
-              message: '账号密码错误',
-              type: 'warning'
-            })
           })
+          // .catch(() => {
+          //   this.$message({
+          //     message: '账号密码错误',
+          //     type: 'warning'
+          //   })
+          // })
         }
       })
     }
