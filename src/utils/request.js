@@ -1,6 +1,7 @@
 import axios from 'axios'
 import router from '../router'
 import { Message } from 'element-ui'
+import JSONBig from 'json-bigint'
 axios.interceptors.request.use(function (config) {
   let token = window.localStorage.getItem('user-token')
   config.headers.Authorization = `Bearer ${token}`
@@ -8,6 +9,10 @@ axios.interceptors.request.use(function (config) {
 }, function () {
 
 })
+
+axios.defaults.transformResponse = [function (data) {
+  return JSONBig.parse(data)
+}]
 
 axios.interceptors.response.use(function (response) {
   return response.data ? response.data : {}
@@ -32,5 +37,6 @@ axios.interceptors.response.use(function (response) {
       break
   }
   Message({ type: 'wraning', message })
+  return Promise.reject(error)
 })
 export default axios
