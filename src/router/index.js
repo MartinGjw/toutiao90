@@ -4,6 +4,7 @@ import Home from '../views/home'
 import login from '../views/login'
 import layout from '../components'
 import home2 from '../views/home/home.vue'
+// import commit from '../views/commit'
 
 Vue.use(VueRouter)
 Vue.use(layout)
@@ -18,6 +19,10 @@ const routes = [
     children: [{
       path: '',
       component: home2
+    },
+    {
+      path: 'comment',
+      component: () => import('../views/commit')
     }]
   }, {
     path: '/login',

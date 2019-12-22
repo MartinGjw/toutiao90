@@ -18,6 +18,9 @@ axios.interceptors.response.use(function (response) {
     case 400:
       message = '请求参数错误'
       break
+    case 403:
+      message = '没有权限'
+      break
     case 401:
       window.localStorage.removeItem('user-token')
       router.push('/login')
