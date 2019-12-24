@@ -27,6 +27,10 @@ const routes = [
     {
       path: 'comment',
       component: () => import('../views/commit')
+    },
+    {
+      path: 'articles',
+      component: () => import('../views/articles')
     }]
   }, {
     path: '/login',
