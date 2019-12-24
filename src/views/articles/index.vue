@@ -39,7 +39,21 @@
     </el-form>
 </el-card>
 <el-card style="margin-top:10px">
-
+      <template slot="header">共找到10000条符合条件的内容</template>
+      <div class="active" v-for="item in 100" :key="item.id">
+      <div class="left">
+          <img src="../../assets/img/1 (1).jpeg" alt="">
+          <div class="forms">
+              <span>标题</span>
+              <el-tag>已发表</el-tag>
+              <span class="time">时间</span>
+          </div>
+      </div>
+      <div class="right">
+          <span><i class="el-icon-edit"></i>修改</span>
+          <span><i class="el-icon-delete"></i>删除</span>
+      </div>
+      </div>
 </el-card>
 </div>
 </template>
@@ -71,6 +85,37 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.active{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    // border-bottom: 1px solid #999;
+    .left{
+        display: flex;
+       img{
+           width: 180px;
+           height: 120px;
+           border-radius: 5px;
+       }
+       .forms{
+           height: 120px;
+            margin-left: 40px;
+            display: flex;
+            flex-direction: column;
+             justify-content: space-around;
+             .time{
+                color: #999;
+                font-size: 12px;
+             }
+       }
+    }
+    .right{
+      font-size: 14px;
+      span{
+          margin-right: 10px;
+          cursor: pointer;
+      }
+    }
+}
 </style>
