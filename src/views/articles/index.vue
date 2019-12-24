@@ -9,7 +9,7 @@
 
     <el-form style="margin-left:20px">
         <el-form-item label="文章状态:">
-              <el-radio-group v-model="searchform.status">
+              <el-radio-group v-model="searchform.status" @change="changecolidin">
                 <el-radio :label="5">全部</el-radio>
                 <el-radio :label="0">草稿</el-radio>
                 <el-radio :label="1">待审核</el-radio>
@@ -17,8 +17,8 @@
                 <el-radio :label="3">审核失败</el-radio>
               </el-radio-group>
         </el-form-item>
-        <el-form-item label="频道列表:">
-               <el-select placeholder="请选择" v-model="searchform.channel_id">
+        <el-form-item label="频道列表:" >
+               <el-select placeholder="请选择" v-model="searchform.channel_id" @change="changecolidin">
                 <el-option
                   v-for="item in channels"
                   :key="item.id"
@@ -29,6 +29,8 @@
         </el-form-item>
         <el-form-item label="时间选择:">
                 <el-date-picker
+                value-format="yyyy-MM-dd"
+                 @change="changecolidin"
                   v-model="searchform.daterange"
                   type="daterange"
                   range-separator="至"
@@ -73,6 +75,15 @@ export default {
     }
   },
   methods: {
+    changecolidin () {
+      let params = {
+        status: this.searchform.status === 5 ? null : this.searchform.status,
+        channel_id: this.searchform.channel_id,
+        begin_pubdate: this.searchform.daterange.length ? this.searchform.daterange[0] : null,
+        end_pubdate: this.searchform.daterange.length > 1 ? this.searchform.daterange[1] : null
+      }
+      this.getarticle(params)
+    },
     getcannel () {
       this.$axios({
         url: '/channels'
@@ -80,9 +91,10 @@ export default {
         this.channels = res.data.channels
       })
     },
-    getarticle () {
+    getarticle (params) {
       this.$axios({
-        url: '/articles'
+        url: '/articles',
+        params
       }).then(res => {
         this.list = res.data.results
       })
