@@ -40,13 +40,13 @@
 </el-card>
 <el-card style="margin-top:10px">
       <template slot="header">共找到10000条符合条件的内容</template>
-      <div class="active" v-for="item in 100" :key="item.id">
+      <div class="active" v-for="item in list" :key="item.id">
       <div class="left">
-          <img src="../../assets/img/1 (1).jpeg" alt="">
+          <img :src="item.cover.images.length?item.cover.images:defaulimg" alt="">
           <div class="forms">
-              <span>标题</span>
-              <el-tag>已发表</el-tag>
-              <span class="time">时间</span>
+              <span>{{item.title}}</span>
+              <el-tag class='biaoqian' :type="item.status | filtertype">{{item.status | filterstatus}}</el-tag>
+              <span class="time">{{item.pubdate}}</span>
           </div>
       </div>
       <div class="right">
@@ -67,7 +67,9 @@ export default {
         channel_id: null, // ????
         daterange: []
       },
-      channels: []
+      channels: [],
+      list: [],
+      defaulimg: require('../../assets/img/1 (1).jpeg')
     }
   },
   methods: {
@@ -77,10 +79,48 @@ export default {
       }).then(res => {
         this.channels = res.data.channels
       })
+    },
+    getarticle () {
+      this.$axios({
+        url: '/articles'
+      }).then(res => {
+        this.list = res.data.results
+      })
+    }
+  },
+  filters: {
+    filtertype (value) {
+      switch (value) {
+        case 0:
+          return 'warning'
+        case 1:
+          return 'info'
+        case 2:
+          return ''
+        case 3:
+          return 'danger'
+        default:
+          break
+      }
+    },
+    filterstatus (value) {
+      switch (value) {
+        case 0:
+          return '草稿'
+        case 1:
+          return '待审核'
+        case 2:
+          return '审核通过'
+        case 3:
+          return '审核失败'
+        default:
+          break
+      }
     }
   },
   created () {
     this.getcannel()
+    this.getarticle()
   }
 }
 </script>
@@ -107,6 +147,10 @@ export default {
              .time{
                 color: #999;
                 font-size: 12px;
+             }
+             .biaoqian{
+                 width: 80px;
+                 text-align: center;
              }
        }
     }
