@@ -53,7 +53,7 @@
       </div>
       <div class="right">
           <span><i class="el-icon-edit"></i>修改</span>
-          <span><i class="el-icon-delete"></i>删除</span>
+          <span @click="delarticle(item.id)"><i class="el-icon-delete"></i>删除</span>
       </div>
       </div>
       <el-row class="fenye">
@@ -91,6 +91,20 @@ export default {
     }
   },
   methods: {
+    delarticle (id) {
+      this.$confirm('是否要删除文章').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/articles/${id}`
+        }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+          this.articalchange()
+        })
+      })
+    },
     currentchange (newpage) {
       this.page.currentpage = newpage
       this.articalchange()
