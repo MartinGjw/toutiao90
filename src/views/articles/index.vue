@@ -41,7 +41,7 @@
     </el-form>
 </el-card>
 <el-card style="margin-top:10px">
-      <template slot="header">共找到10000条符合条件的内容</template>
+      <template slot="header">共找到{{page.total}}条符合条件的内容</template>
       <div class="active" v-for="item in list" :key="item.id">
       <div class="left">
           <img :src="item.cover.images.length?item.cover.images:defaulimg" alt="">
@@ -56,6 +56,16 @@
           <span><i class="el-icon-delete"></i>删除</span>
       </div>
       </div>
+      <el-row class="fenye">
+          <el-pagination
+             background
+             @current-change='currentchange'
+             layout="prev, pager, next"
+             :total="page.total"
+             :current-page="page.currentpage"
+             :page-size="pagesize">
+           </el-pagination>
+      </el-row>
 </el-card>
 </div>
 </template>
@@ -71,12 +81,28 @@ export default {
       },
       channels: [],
       list: [],
-      defaulimg: require('../../assets/img/1 (1).jpeg')
+      defaulimg: require('../../assets/img/1 (1).jpeg'),
+      page: {
+        total: 0,
+        currentpage: 1,
+        pagesize: 10
+
+      }
     }
   },
   methods: {
+    currentchange (newpage) {
+      this.page.currentpage = newpage
+      this.articalchange()
+    },
     changecolidin () {
+      this.page.currentpage = 1
+      this.articalchange()
+    },
+    articalchange () {
       let params = {
+        page: this.page.currentpage,
+        per_page: this.page.pagesize,
         status: this.searchform.status === 5 ? null : this.searchform.status,
         channel_id: this.searchform.channel_id,
         begin_pubdate: this.searchform.daterange.length ? this.searchform.daterange[0] : null,
@@ -97,6 +123,7 @@ export default {
         params
       }).then(res => {
         this.list = res.data.results
+        this.page.total = res.data.total_count
       })
     }
   },
@@ -173,5 +200,9 @@ export default {
           cursor: pointer;
       }
     }
+
 }
+.fenye{
+        text-align: center;
+    }
 </style>
