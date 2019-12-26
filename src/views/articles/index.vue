@@ -25,7 +25,7 @@
                   :label="item.name"
                   :value="item.id">
                 </el-option>
-  </el-select>
+               </el-select>
         </el-form-item>
         <el-form-item label="时间选择:">
                 <el-date-picker
