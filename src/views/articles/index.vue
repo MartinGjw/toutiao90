@@ -52,7 +52,7 @@
           </div>
       </div>
       <div class="right">
-          <span><i class="el-icon-edit"></i>修改</span>
+          <span @click="mondif(item.id)"><i class="el-icon-edit"></i>修改</span>
           <span @click="delarticle(item.id)"><i class="el-icon-delete"></i>删除</span>
       </div>
       </div>
@@ -86,11 +86,13 @@ export default {
         total: 0,
         currentpage: 1,
         pagesize: 10
-
       }
     }
   },
   methods: {
+    mondif (id) {
+      this.$router.push(`/home/publish/${id.toString()}`)
+    },
     delarticle (id) {
       this.$confirm('是否要删除文章').then(() => {
         this.$axios({

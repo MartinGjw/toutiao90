@@ -85,11 +85,37 @@ export default {
           })
         }
       })
+    },
+    getarticlebyid (articleid) {
+      this.$axios({
+        url: `/articles/${articleid}`
+      }).then(res => {
+        this.formdata = res.data
+      })
     }
 
   },
   created () {
     this.getcannel()
+    let{ articleid } = this.$route.params
+    articleid && this.getarticlebyid(articleid)
+  },
+  watch: {
+    $route: function (to, from) {
+      if (to.params.articleid) {
+
+      } else {
+        this.formdata = {
+          title: '',
+          content: '',
+          cover: {
+            type: 0,
+            images: []
+          },
+          channel_id: null
+        }
+      }
+    }
   }
 }
 </script>
