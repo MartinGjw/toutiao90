@@ -14,12 +14,13 @@
           <quill-editor v-model="formdata.content" style="height:300px;margin-left:50px"></quill-editor>
         </el-form-item>
          <el-form-item prop="cover" label="封面" style="margin-top:70px">
-           <el-radio-group v-model="formdata.cover.type">
+           <el-radio-group v-model="formdata.cover.type" @change="changetype">
                   <el-radio :label="1">单图</el-radio>
                   <el-radio :label="3">三图</el-radio>
                   <el-radio :label="0">无图</el-radio>
                   <el-radio :label="-1">自动</el-radio>
            </el-radio-group>
+           <cover-image :list="formdata.cover.images"></cover-image>
         </el-form-item>
          <el-form-item prop="channel_id" label="频道">
             <el-select placeholder="请选择" v-model="formdata.channel_id">
@@ -61,6 +62,15 @@ export default {
     }
   },
   methods: {
+    changetype () {
+      if (this.formdata.cover.type === 0 || this.formdata.cover.type === -1) {
+        this.formdata.cover.images = [] // 无图或者自动
+      } else if (this.formdata.cover.type === 1) {
+        this.formdata.cover.images = [''] // 单图
+      } else if (this.formdata.cover.type === 3) {
+        this.formdata.cover.images = ['', '', ''] // 3图
+      }
+    },
     getcannel () {
       this.$axios({
         url: '/channels'
@@ -70,10 +80,11 @@ export default {
     },
     publishArticle (draft) {
       this.$refs.publishform.validate(isok => {
+        let{ articleid } = this.$route.params
         if (isok) {
           this.$axios({
-            url: '/articles',
-            method: 'post',
+            url: articleid ? `/articles/${articleid}` : '/articles',
+            method: articleid ? 'put' : 'post',
             params: { draft },
             data: this.formdata
           }).then(res => {
