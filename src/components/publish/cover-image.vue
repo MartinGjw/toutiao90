@@ -1,13 +1,15 @@
 <template>
   <div class='cover-image'>
-      <div @click="opendia" v-for="(item,index) in list" :key="index" class='cover-image-item'>
+      <div @click="opendia(index)" v-for="(item,index) in list" :key="index" class='cover-image-item'>
           <img :src="item ? item : defaultImg" alt="">
       </div>
       <el-dialog
       :visible="dialogVisible"
       title="选择封面图片"
       @close="closedia"
-      ></el-dialog>
+      >
+      <select-image @selectoneimg="passval"></select-image>
+      </el-dialog>
   </div>
 </template>
 
@@ -17,12 +19,18 @@ export default {
   data () {
     return {
       defaultImg: require('../../assets/img/pic_bg.png'),
-      dialogVisible: false
+      dialogVisible: false,
+      selectindex: -1
     }
   },
   methods: {
-    opendia () {
+    passval (url) {
+      this.$emit('selecttwoimg', url, this.selectindex)
+      this.closedia()
+    },
+    opendia (index) {
       this.dialogVisible = true
+      this.selectindex = index
     },
     closedia () {
       this.dialogVisible = false

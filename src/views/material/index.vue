@@ -26,8 +26,10 @@
                   <el-card v-for="item in list" :key="item.id" class="img-card" :body-style="{ padding: '0px' }">
                      <img :src="item.url" alt="">
                      <el-row class="img-row" type="flex" align="middle">
-                    <i class="el-icon-ice-tea"></i>
-                    <i class="el-icon-delete"></i>
+                    <!-- <i class="el-icon-ice-tea"></i>
+                    <i class="el-icon-delete"></i> -->
+                     <i @click="collor(item)" :style="{color:item.is_collected ? 'red':'#000'}" class="el-icon-ice-tea"></i>
+                    <i @click="delmeral(item.id)" class="el-icon-delete"></i>
                   </el-row>
                   </el-card>
                 </div>

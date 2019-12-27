@@ -20,7 +20,7 @@
                   <el-radio :label="0">无图</el-radio>
                   <el-radio :label="-1">自动</el-radio>
            </el-radio-group>
-           <cover-image :list="formdata.cover.images"></cover-image>
+           <cover-image @selecttwoimg="passval" :list="formdata.cover.images"></cover-image>
         </el-form-item>
          <el-form-item prop="channel_id" label="频道">
             <el-select placeholder="请选择" v-model="formdata.channel_id">
@@ -62,6 +62,13 @@ export default {
     }
   },
   methods: {
+    passval (url, index) {
+      this.formdata.cover.images = this.formdata.cover.images.map(function (item, i) {
+        if (index === i) {
+          return url
+        } return item
+      })
+    },
     changetype () {
       if (this.formdata.cover.type === 0 || this.formdata.cover.type === -1) {
         this.formdata.cover.images = [] // 无图或者自动
