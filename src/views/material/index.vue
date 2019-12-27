@@ -3,10 +3,10 @@
       <bread-crumb slot="header">
       <span slot="title">素材管理</span>
       </bread-crumb>
-      <el-upload class="upload-demo" :http-request="upload" :show-file-list="false" >
+      <el-upload class="upload-demo" action="" :http-request="upload" :show-file-list="false" >
           <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
-            <el-tabs :tab-position="tabPosition" v-model="activeNmae" @tab-click="changgetab">
+            <el-tabs tab-position="" v-model="activeNmae" @tab-click="changgetab">
               <el-tab-pane label="全部图片" name="all">
 
                   <div class="img-list">

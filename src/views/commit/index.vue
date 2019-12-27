@@ -21,10 +21,10 @@
     <el-row type="flex" justify="center" align="middle" style="height:80px">
       <el-pagination
         background
-        :page-size="pageSize"
-        :current-page="currentpage"
+        :page-size="page.pageSize"
+        :current-page="page.currentpage"
         layout="prev, pager, next"
-        :total="total"
+        :total="page.total"
         @current-change="currentchange">
     </el-pagination>
     </el-row>
@@ -52,11 +52,11 @@ export default {
         url: '/articles',
         params: { response_type: 'comment',
           page: this.page.currentpage,
-          per_page: this.pageSize }
+          per_page: this.page.pageSize }
       }).then(res => {
         this.zhuangtai = false
         this.list = res.data.results
-        this.total = res.data.total_count
+        this.page.total = res.data.total_count
       })
     },
     // 监听分页点击事件

@@ -42,9 +42,9 @@
 </el-card>
 <el-card style="margin-top:10px">
       <template slot="header">共找到{{page.total}}条符合条件的内容</template>
-      <div class="active" v-for="item in list" :key="item.id">
+      <div class="active" v-for="item in list" :key="item.id.toString()">
       <div class="left">
-          <img :src="item.cover.images.length?item.cover.images:defaulimg" alt="">
+          <img :src="item.cover.images.length ? item.cover.images[0] : defaulimg" alt="">
           <div class="forms">
               <span>{{item.title}}</span>
               <el-tag class='biaoqian' :type="item.status | filtertype">{{item.status | filterstatus}}</el-tag>
@@ -63,7 +63,7 @@
              layout="prev, pager, next"
              :total="page.total"
              :current-page="page.currentpage"
-             :page-size="pagesize">
+             :page-size="page.pagesize">
            </el-pagination>
       </el-row>
 </el-card>
@@ -175,7 +175,7 @@ export default {
   },
   created () {
     this.getcannel()
-    this.getarticle()
+    this.getarticle({ page: 1, per_page: 10 })
   }
 }
 </script>
