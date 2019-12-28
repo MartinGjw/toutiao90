@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -41,19 +42,26 @@ export default {
         window.localStorage.removeItem('user-token')
         this.$router.push('/login')
       }
+    },
+    getuserinfo () {
+      this.$axios({
+        url: '/user/profile'
+      // headers: {
+      //   Authorization: `Bearer ${token}`
+      // }
+      }).then(res => {
+        this.userinfor = res.data
+      })
     }
   },
   created () {
     // let token = localStorage.getItem('user-token')
-    this.$axios({
-      url: '/user/profile'
-      // headers: {
-      //   Authorization: `Bearer ${token}`
-      // }
-    }).then(res => {
-      this.userinfor = res.data
+    this.getuserinfo()
+    eventBus.$on('updatauserinfo', () => {
+      this.getuserinfo()
     })
   }
+
 }
 </script>
 
