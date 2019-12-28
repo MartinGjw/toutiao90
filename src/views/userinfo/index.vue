@@ -22,7 +22,7 @@
             <el-button @click="saveuserinfo" type="primary">保存信息</el-button>
         </el-form-item>
     </el-form>
-    <el-upload class="head-upload" :show-file-list="false" action="">
+    <el-upload :http-request="uploadimg" class="head-upload" :show-file-list="false" action="">
             <img :src="formdata.photo?formdata.photo:defaultimg" alt="">
     </el-upload>
   </el-card>
@@ -70,6 +70,17 @@ export default {
             message: '保存成功'
           })
         })
+      })
+    },
+    uploadimg (params) {
+      let data = new FormData()
+      data.append('photo', params.file)
+      this.$axios({
+        url: '/user/photo',
+        method: 'patch',
+        data
+      }).then(res => {
+        this.formdata.photo = res.data.photo
       })
     }
   },
