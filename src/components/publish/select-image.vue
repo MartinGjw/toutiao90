@@ -17,7 +17,11 @@
           </el-pagination>
       </el-row>
     </el-tab-pane>
-    <el-tab-pane label="上传图片" name="upload">上传图片</el-tab-pane>
+    <el-tab-pane label="上传图片" name="upload">
+           <el-upload class="upload" action="" :show-file-list="false" :http-request="uploadimg">
+              <i class="el-icon-plus"></i>
+           </el-upload>
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -34,7 +38,20 @@ export default {
       }
     }
   },
+
   methods: {
+    // 上传图片?????
+    uploadimg (params) {
+      let data = new FormData()
+      data.append('image', params.file)
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data
+      }).then(res => {
+        this.$emit('selectoneimg', res.data.url)
+      })
+    },
     passval (url) {
       this.$emit('selectoneimg', url)
     },
@@ -72,5 +89,17 @@ export default {
               height: 150px;
           }
      }
+}
+.upload{
+    width: 200px;
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+     border: 1px dashed #ccc;
+    .el-icon-plus{
+      font-size:50px;
+      padding: 5px;
+
+    }
 }
 </style>
