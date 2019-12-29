@@ -52,27 +52,24 @@ export default {
     }
   },
   methods: {
-    getuserinfo () {
-      this.$axios({
+    async getuserinfo () {
+      let res = await this.$axios({
         url: '/user/profile'
-      }).then(res => {
-        this.formdata = res.data
       })
+      this.formdata = res.data
     },
-    saveuserinfo () {
-      this.$refs.myform.validate().then(res => {
-        this.$axios({
-          url: '/user/profile',
-          method: 'patch',
-          data: this.formdata
-        }).then(res => {
-          this.$message({
-            type: 'success',
-            message: '保存成功'
-          })
-          eventBus.$emit('updatauserinfo')
-        })
+    async saveuserinfo () {
+      await this.$refs.myform.validate()
+      await this.$axios({
+        url: '/user/profile',
+        method: 'patch',
+        data: this.formdata
       })
+      this.$message({
+        type: 'success',
+        message: '保存成功'
+      })
+      eventBus.$emit('updatauserinfo')
     },
     uploadimg (params) {
       let data = new FormData()

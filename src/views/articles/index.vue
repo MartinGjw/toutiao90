@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { getarticle, getcannel } from '../../actions/article'
 export default {
   data () {
     return {
@@ -93,19 +94,18 @@ export default {
     mondif (id) {
       this.$router.push(`/home/publish/${id.toString()}`)
     },
-    delarticle (id) {
-      this.$confirm('是否要删除文章').then(() => {
-        this.$axios({
-          method: 'delete',
-          url: `/articles/${id}`
-        }).then(res => {
-          this.$message({
-            type: 'success',
-            message: '删除成功'
-          })
-          this.articalchange()
-        })
+    async delarticle (id) {
+      await this.$confirm('是否要删除文章')
+      await getarticle(null, id, 'delete')
+      // this.$axios({
+      //   method: 'delete',
+      //   url: `/articles/${id}`
+      // })
+      this.$message({
+        type: 'success',
+        message: '删除成功'
       })
+      this.articalchange()
     },
     currentchange (newpage) {
       this.page.currentpage = newpage
@@ -126,21 +126,14 @@ export default {
       }
       this.getarticle(params)
     },
-    getcannel () {
-      this.$axios({
-        url: '/channels'
-      }).then(res => {
-        this.channels = res.data.channels
-      })
+    async getcannel () {
+      let res = await getcannel()
+      this.channels = res.data.channels
     },
-    getarticle (params) {
-      this.$axios({
-        url: '/articles',
-        params
-      }).then(res => {
-        this.list = res.data.results
-        this.page.total = res.data.total_count
-      })
+    async  getarticle (params) {
+      let res = await getarticle(params, null, null)
+      this.list = res.data.results
+      this.page.total = res.data.total_count
     }
   },
   filters: {
