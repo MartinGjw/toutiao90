@@ -43,6 +43,10 @@ const routes = [
     {
       path: 'userinfo',
       component: () => import('../views/userinfo')
+    },
+    {
+      path: 'picture',
+      component: () => import('../views/picture')
     }]
   }, {
     path: '/login',
