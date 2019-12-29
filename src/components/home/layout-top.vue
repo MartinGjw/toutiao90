@@ -2,7 +2,7 @@
   <div>
       <el-row class="top" type="flex" align="middle">
           <el-col :span='12' class="left">
-            <i class="el-icon-s-unfold"></i>
+            <i @click="collapseoropen" :class="{'el-icon-s-unfold':collapse,'el-icon-s-fold':!collapse}"></i>
             <span>江苏传智播客教育科技股份有限公司</span>
           </el-col>
           <el-col :span='12' class="right">
@@ -29,13 +29,18 @@ export default {
   data () {
     return {
       userinfor: {},
-      defaultimg: require('../../assets/img/1 (1).jpeg')
+      defaultimg: require('../../assets/img/1 (1).jpeg'),
+      collapse: false
     }
   },
   methods: {
+    collapseoropen () {
+      this.collapse = !this.collapse
+      eventBus.$emit('changecollapse')
+    },
     pushclick (command) {
       if (command === 'info') {
-
+        this.$router.push('/home/userinfo')
       } else if (command === 'gittitle') {
         window.location.href = 'https://github.com/MartinGjw'
       } else {
