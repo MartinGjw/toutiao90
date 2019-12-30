@@ -1,9 +1,9 @@
 <template>
   <el-container>
-    <el-aside :style="{width : collapse ? '60px' : '230px'}" style="transition: all 0.5s; min-height:100vh; background-color:#323745">
+    <el-aside class="asidl" :style="{width : collapse ? '60px' : '230px'}" style="transition: all 0.5s; min-height:100vh; background-color:#323745">
    <layout-aside :collapse="collapse"></layout-aside>
     </el-aside>
-    <el-container>
+    <el-container :style="{marginLeft : collapse ? '60px' : '230px'}" style="transition: all 0.5s">
       <el-header>
      <!-- 右侧顶 -->
      <layout-top></layout-top>
@@ -32,6 +32,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.asidl{
+  position: fixed
+}
 </style>

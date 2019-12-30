@@ -47,14 +47,15 @@ const routes = [
     {
       path: 'picture',
       component: () => import('../views/picture')
-    },
-    {
-      path: '*',
-      component: () => import('../views/404')
-    }]
+    }
+    ]
   }, {
     path: '/login',
     component: login
+  },
+  {
+    path: '*',
+    component: () => import('../views/404')
   }
   // {
   //   path: '/about',
